@@ -28,23 +28,23 @@ public class UserServiceImpl implements UserService {
     public User findUserById(Integer id) throws Exception {
         Optional<User> opt = userRepository.findById(id);
 
-        if (opt.isPresent()){
-            return  opt.get();
+        if (opt.isPresent()) {
+            return opt.get();
         }
-        throw new UserException("User not found with id "+id);
+        throw new UserException("User not found with id " + id);
     }
 
     @Override
     public User findUserProfile(String jwt) throws UserException {
         String email = tokenProvider.getEmailFromToken(jwt);
 
-        if (email == null){
-            throw  new BadCredentialsException("Received invalid token---");
+        if (email == null) {
+            throw new BadCredentialsException("Received invalid token---");
         }
         User user = userRepository.findByEmail(email);
 
-        if (user == null){
-            throw new UserException("User not found with email "+email);
+        if (user == null) {
+            throw new UserException("User not found with email " + email);
         }
         return user;
     }
@@ -53,18 +53,18 @@ public class UserServiceImpl implements UserService {
     public User updateUser(Integer userId, UpdateUserRequest reg) throws Exception {
         User user = findUserById(userId);
 
-        if (reg.getFull_name() != null){
+        if (reg.getFull_name() != null) {
             user.setFull_name(reg.getFull_name());
         }
 
-        if (user.getProfile_picture() != null){
+        if (reg.getProfile_picture() != null) {
             user.setProfile_picture(reg.getProfile_picture());
         }
         return userRepository.save(user);
     }
 
     @Override
-    public List<User> searchUser(String query) {
-        return userRepository.searchUser(query);
+    public Optional<List<User>> searchUser(String query) {
+        return Optional.of(userRepository.searchUser(query));
     }
 }

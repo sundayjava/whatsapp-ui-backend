@@ -9,6 +9,9 @@ import java.util.List;
 
 public interface UserRepository extends JpaRepository<User, Integer> {
     public User findByEmail(String email);
-    @Query("select u from User u where u.full_name Like %:query% or u.email Like %:query%")
-    public List<User> searchUser(@Param("query") String query);
+    
+    @Query(value = "SELECT * FROM User WHERE "
+            + "CONCAT(User.full_name, User.email)"
+            + "LIKE %?1% ", nativeQuery = true)
+    public List<User> searchUser(String keyword);
 }

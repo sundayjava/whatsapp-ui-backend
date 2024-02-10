@@ -39,7 +39,7 @@ public class ChatServiceImpl implements ChatService {
         chat.getUsers().add(reqUser);
         chat.setGroup(false);
 
-        return chat;
+        return chatRepository.save(chat);
     }
 
     @Override
@@ -71,7 +71,7 @@ public class ChatServiceImpl implements ChatService {
             User user = userService.findUserById(userId);
             group.getUsers().add(user);
         }
-        return group;
+        return chatRepository.save(group);
     }
 
     @Override

@@ -17,7 +17,7 @@ public class TokenProvider {
         return Jwts.builder()
                 .issuer("Sunday David Udoekong")
                 .issuedAt(new Date())
-                .expiration(new Date(new Date().getTime() * 86400000))
+                .expiration(new Date(System.currentTimeMillis() + 7 * 24 * 60 * 60 * 1000))
                 .claim("email", authentication.getName())
                 .signWith(key)
                 .compact();

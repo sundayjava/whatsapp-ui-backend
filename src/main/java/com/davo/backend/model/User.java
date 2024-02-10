@@ -1,9 +1,6 @@
 package com.davo.backend.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.util.Objects;
 
@@ -12,8 +9,10 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+    @Column(name = "full_name")
     private String full_name;
     private String email;
+    @Column(name = "profile_picture", length = 100000)
     private String profile_picture;
     private String password;
 
